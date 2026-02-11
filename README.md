@@ -43,8 +43,16 @@ Agreconnect_web/
 └── README.md
 
 ## 📸 Screenshots
-
+1️⃣ Login_Page
+![Login Page](static/images/login_page.png)
+2️⃣Home_page
 ![Home Page](static/images/home.png)
+3️⃣Farmer_page
+![Farmer Page](static/images/Farmer_page.png)
+![Farmer Page](static/images/Farmer.png)
+4️⃣Cart_Page
+![Cart Page](static/images/cart.png)
+
 
 ⚙️ Installation Guide
 1️⃣ Clone the Repository
