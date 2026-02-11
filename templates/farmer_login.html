@@ -1,0 +1,167 @@
+<!-- templates/farmer_login.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Farmer Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .heading {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .heading span {
+            color: #16a085;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px 35px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        input[type="email"] {
+            text-transform: none !important;
+        }
+
+        .form-container h3 {
+            text-align: center;
+            color: #16a085;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-top: 10px;
+        }
+
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .form-container button {
+            background-color: #16a085;
+            color: #fff;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #13876b;
+        }
+
+        .form-container p {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .form-container a {
+            color: #16a085;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .form-container a:hover {
+            text-decoration: underline;
+        }
+
+        /* Flash message styling */
+        .flash {
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .flash.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .flash.danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .flash.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        .flash.info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="heading">Farmer <span>Login</span></h1>
+
+    <div class="form-container">
+        <h3>Welcome Back!</h3>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <!-- Login form -->
+        <form method="POST" action="{{url_for('farmer_login')}}">
+            <label>Email</label>
+            <!-- ✅ Enhanced attributes to prevent auto-capitalization -->
+            <input type="email" name="email" autocomplete="email" autocapitalize="none" autocorrect="off"
+                spellcheck="false" placeholder="Enter your email" required>
+
+            <label>Password</label>
+            <input type="password" name="password" autocomplete="current-password" placeholder="Enter your password"
+                required>
+            <a href="{{ url_for('forgot_password') }}" style="color:red;">Forgot Password?</a>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <p>👉 Don’t have an account? <a href="{{ url_for('farmer_register') }}">Register Here</a></p>
+    </div>
+</body>
+
+</html>

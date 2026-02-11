@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Farming News</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f7f6;
+            color: #333;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2c7a2c;
+        }
+
+        /* News container */
+        .news-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* News cards */
+        .news-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .news-card h2 {
+            color: #2c7a2c;
+            margin-bottom: 8px;
+        }
+
+        .news-card small {
+            display: block;
+            margin-top: 6px;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        .news-card img {
+            margin: 12px 0;
+            border-radius: 10px;
+            height: 500px;
+            width: 650px;
+        }
+
+        /* Buttons inline */
+        .news-actions {
+            margin-top: 10px;
+        }
+
+        .news-actions form,
+        .news-actions button {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .news-actions button,
+        .news-actions input[type="submit"] {
+            background: #2c7a2c;
+            color: white;
+            padding: 8px 14px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+
+        .news-actions button:hover,
+        .news-actions input[type="submit"]:hover {
+            background: #256b25;
+        }
+
+        .news-actions input[type="text"] {
+            padding: 5px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+        }
+
+
+        .comments-container {
+            display: none;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+
+        .comments-container div {
+            background: #f9f9f9;
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 6px;
+        }
+
+        .toggle-comments-btn {
+            background: #eee;
+            color: #333;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .toggle-comments-btn:hover {
+            background: #ddd;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="news-container">
+        {% if is_subscriber %}
+        <h1>Latest Farming News</h1>
+
+        {% if news %}
+        {% for post in news %}
+        <div class="news-card">
+            <h2>{{ post.title }}</h2>
+            <p>{{ post.content }}</p>
+            {% if post.image %}
+            <img src="{{ url_for('static', filename='uploads/' + post.image) }}" alt="{{ post.title }}">
+            {% endif %}
+            <small>By {{ post.farmer_email }} on {{ post.created_at }}</small>
+
+
+            <div class="news-actions">
+                <form action="{{ url_for('like_news', news_id=post.id) }}" method="POST">
+                    <input type="submit" value="❤️ Like ({{ post.like_count or 0 }})">
+                </form>
+
+                <form action="{{ url_for('add_comment', news_id=post.id) }}" method="POST">
+                    <input type="text" name="comment" placeholder="Add a comment..." required>
+                    <input type="submit" value="💬 Comment">
+                </form>
+
+                <button class="share-btn" data-id="{{ post.id }}" data-title="{{ post.title }}">
+                    📤 Share
+                </button>
+            </div>
+
+
+            <button type="button" class="toggle-comments-btn">💬 Show Comments</button>
+
+
+            <div class="comments-container">
+                {% if post.comments %}
+                {% for comment in post.comments %}
+                <div>
+                    <strong>{{ comment.user }}</strong> said:<br>
+                    {{ comment.comment }}<br>
+                    <small>{{ comment.created_at }}</small>
+                </div>
+                {% endfor %}
+                {% else %}
+                <p><em>No comments yet.</em></p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="empty-message">No news posts yet.</p>
+        {% endif %}
+
+        {% else %}
+        <h1>Subscribe to See Farming News</h1>
+        <p class="empty-message">Please subscribe to our newsletter to access farming news.</p>
+        {% endif %}
+    </div>
+
+    <script>
+        document.querySelectorAll(".toggle-comments-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const container = btn.nextElementSibling;
+                if (container.style.display === "none") {
+                    container.style.display = "block";
+                    btn.textContent = "💬 Hide Comments";
+                } else {
+                    container.style.display = "none";
+                    btn.textContent = "💬 Show Comments";
+                }
+            });
+        });
+
+
+        document.querySelectorAll(".share-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const newsId = btn.getAttribute("data-id");
+                const title = btn.getAttribute("data-title");
+                const url = window.location.href;
+
+                if (navigator.share) {
+                    navigator.share({ title: title, url: url }).catch(console.error);
+                } else {
+                    navigator.clipboard.writeText(url).then(() => {
+                        alert("Link copied to clipboard!");
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

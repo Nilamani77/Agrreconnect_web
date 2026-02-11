@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Cart</title>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        /* General */
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 .2rem .5rem rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #130f40;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .header .logo i {
+            color: rgb(6, 193, 6);
+            font-size: 2rem;
+        }
+
+        .header .icons {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* Icon links */
+        .header .icons a {
+            text-decoration: none;
+            color: #130f40;
+            font-size: 1.6rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Hover effect */
+        .header .icons a:hover {
+            color: rgb(5, 160, 5);
+            transform: scale(1.2);
+        }
+
+        .header .my-orders-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            /* Green */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .header .my-orders-btn:hover {
+            background-color: #45a049;
+        }
+
+        /* Cart Container */
+        .cart-container {
+            max-width: 1000px;
+            margin: 120px auto 50px auto;
+            /* Added top margin for fixed header */
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+
+        table th,
+        table td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        table th {
+            background: #27ae60;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        table tr:hover {
+            background: #f9f9f9;
+        }
+
+        img {
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Buttons */
+        .actions button {
+            padding: 6px 12px;
+            margin: 2px;
+            font-size: 0.9rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* Increase */
+        .actions button[value="increase"] {
+            background: #27ae60;
+            color: #fff;
+        }
+
+        .actions button[value="increase"]:hover {
+            background: #219150;
+        }
+
+        /* Decrease */
+        .actions button[value="decrease"] {
+            background: #f39c12;
+            color: #fff;
+        }
+
+        .actions button[value="decrease"]:hover {
+            background: #d68910;
+        }
+
+        /* Delete */
+        .actions button[value="delete"] {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        .actions button[value="delete"]:hover {
+            background: #c0392b;
+        }
+
+        /* Save for Later */
+        .actions button[value="save"] {
+            background: gray;
+            color: #fff;
+        }
+
+        /* Move to Cart */
+        .actions button {
+            background: #9b59b6;
+            color: #fff;
+        }
+
+        .actions button:hover {
+            background: #8e44ad;
+        }
+
+        /* Total + Checkout */
+        .total {
+            text-align: right;
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 20px;
+        }
+
+        .btn-checkout {
+            display: inline-block;
+            padding: 14px 24px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: 0.3s;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            background: #27ae60;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-checkout:hover {
+            background: #219150;
+            color: #f7f7f7;
+        }
+
+        /* Empty Cart */
+        .empty-cart {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+            margin-top: 30px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .cart-container {
+                padding: 15px;
+                margin: 80px 10px 20px 10px;
+            }
+
+            h1 {
+                font-size: 1.3rem;
+            }
+
+            .total {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            .btn-checkout {
+                width: 100%;
+                font-size: 1rem;
+                padding: 14px;
+            }
+
+            table th,
+            table td {
+                font-size: 0.85rem;
+                padding: 10px;
+            }
+
+            img {
+                max-width: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <a href="#" class="logo">
+            <i class="fas fa-shopping-basket"></i> Agriconnect
+        </a>
+        <div class="icons">
+            <a href="{{ url_for('project') }}" title="Home">
+                <i class="fas fa-home" id="home-btn"></i>
+            </a>
+            <a href="{{url_for('order_summary')}}" class="my-orders-btn">My Orders</a>
+        </div>
+    </header>
+
+    <div class="cart-container">
+        <h1>Shopping Cart</h1>
+
+        {% if cart %}
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+            {% for item in cart %}
+            <tr>
+                <td><img src="{{ url_for('static', filename='uploads/' ~ item.image) }}" width="80"></td>
+                <td>{{ item.name }}</td>
+                <td>${{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.price * item.quantity }}</td>
+                <td class="actions">
+                    <form action="{{ url_for('update_cart', product_id=item.id) }}" method="POST"
+                        style="display:inline;">
+                        <button type="submit" name="action" value="increase">+</button>
+                        <button type="submit" name="action" value="decrease">-</button>
+                        <button type="submit" name="action" value="delete">Delete</button>
+                        <button type="submit" name="action" value="save">Save for Later</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <div class="total">Total: ${{ total }}</div>
+        <a href="{{ url_for('checkout') }}" class="btn-checkout">Checkout</a>
+
+        <!-- Saved for Later Section -->
+        {% if saved_items %}
+        <h2>Saved for Later</h2>
+        <table>
+            <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Action</th>
+            </tr>
+            {% for item in saved_items %}
+            <tr>
+                <td><img src="{{ url_for('static', filename='uploads/' ~ item.image) }}" width="80"></td>
+                <td>{{ item.name }}</td>
+                <td>${{ item.price }}</td>
+                <td>{{ item.quantity }}</td>
+                <td class="actions">
+                    <form action="{{ url_for('move_to_cart', product_id=item.id) }}" method="POST"
+                        style="display:inline;">
+                        <button type="submit">Move to Cart</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+
+        {% else %}
+        <p class="empty-cart">Your cart is empty.</p>
+        {% endif %}
+    </div>
+</body>
+
+</html>

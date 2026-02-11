@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Add News</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<style>
+    /* General page styling */
+    body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #f4f7f6;
+        color: #333;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    /* Container */
+    form {
+        background: #fff;
+        padding: 25px 30px;
+        border-radius: 12px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin-top: 20px;
+    }
+
+    /* Heading */
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #2c7a2c;
+    }
+
+    /* Flash messages */
+    ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+    }
+
+    ul li {
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 0.95rem;
+        margin-bottom: 8px;
+    }
+
+    .success {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .error {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    /* Form labels */
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 6px;
+        color: #2c7a2c;
+    }
+
+    /* Inputs + textarea */
+    input[type="text"],
+    textarea,
+    input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    input[type="file"]:focus {
+        outline: none;
+        border-color: #2c7a2c;
+    }
+
+    /* Button */
+    button {
+        display: inline-block;
+        width: 100%;
+        padding: 12px;
+        background: #2c7a2c;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+    button:hover {
+        background: #256b25;
+    }
+
+    /* Back link */
+    p a {
+        display: inline-block;
+        margin-top: 15px;
+        color: #2c7a2c;
+        font-weight: bold;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    p a:hover {
+        color: #1e5e1e;
+    }
+</style>
+
+<body>
+    <h1>📝 Post News</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <ul>
+        {% for category, msg in messages %}
+        <li class="{{ category }}">{{ msg }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('add_news') }}" method="POST" enctype="multipart/form-data">
+        <label>Title:</label>
+        <input type="text" name="title" required><br><br>
+
+        <label>Content:</label><br>
+        <textarea name="content" rows="5" required></textarea><br><br>
+
+        <label>Upload Image:</label>
+        <input type="file" name="image"><br><br>
+
+        <button type="submit">Post News</button>
+    </form>
+
+    <p><a href="{{ url_for('newsletter') }}">⬅ Back to Newsletter</a></p>
+</body>
+
+</html>

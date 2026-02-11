@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Our Products - AgriConnect</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* Section Heading */
+        .Product .heading {
+            margin: 20px 0;
+            padding: 10px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .Product .heading span {
+            background: green;
+            color: #fff;
+            padding: 0 8px;
+            border-radius: 4px;
+        }
+
+        /* Product Grid */
+        .Product .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            /* ✅ Adaptive grid */
+            gap: 1.2rem;
+            padding: 20px;
+            margin-top: 0;
+            width: auto;
+            height: 1000px;
+            box-sizing: border-box;
+        }
+
+        /* Product Card */
+        .Product .box {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 15px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            /* ✅ Equal height cards */
+        }
+
+        .Product .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Product Image */
+        .Product .box img {
+            width: 300px;
+            height: 200px;
+            /* ⬅️ smaller than 200px */
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 12px;
+        }
+
+        /* Product Name */
+        .Product .box h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 8px 0;
+            color: #333;
+            min-height: 40px;
+            /* ✅ Keeps names aligned */
+        }
+
+        /* Price & Quantity */
+        .Product .box .price,
+        .Product .box .quantity {
+            display: block;
+            font-size: 1rem;
+            margin: 4px 0;
+            color: #444;
+        }
+
+        .Product .box .price {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        /* Farmer Info */
+        .Product .box .farmer-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin: 6px 0;
+            min-height: 20px;
+        }
+
+        /* Rating Stars */
+        .Product .box .stars {
+            margin: 8px 0;
+        }
+
+        .Product .box .stars i {
+            font-size: 1rem;
+            color: #f39c12;
+        }
+
+        /* Add to Cart Button */
+        .Product .box .btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 18px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .Product .box .btn:hover {
+            background: green;
+            color: #fff;
+        }
+
+        .rating-info {
+            margin: 5px 0;
+            font-size: 0.85rem;
+        }
+
+        /* Star Rating Interaction */
+        .Product .box .stars i {
+            font-size: 1rem;
+            color: orange;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .Product .box .stars i:hover,
+        .Product .box .stars i:hover~i {
+            color: #f39c12;
+        }
+
+        .Product .box .stars i.active {
+            color: #f39c12;
+        }
+
+        /* ✅ Mobile View */
+        @media (max-width: 768px) {
+
+            header,
+            nav,
+            .navbar {
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 10px;
+            }
+
+            .Product .heading {
+                font-size: 2rem;
+            }
+
+            .Product .box-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                /* smaller min width */
+                gap: 1.2rem;
+                padding: 20px;
+                margin-top: 0;
+                width: 100%;
+                /* full width, no overflow */
+                height: auto;
+                /* let it grow naturally */
+                box-sizing: border-box;
+            }
+
+
+            .Product .box {
+                padding: 12px;
+            }
+
+            .Product .box img {
+                height: 160px;
+                width: 110%;
+                box-shadow: var(--box-shadow);
+            }
+
+            .Product .box h3 {
+                font-size: 1.1rem;
+            }
+
+            .Product .box .price,
+            .Product .box .quantity {
+                font-size: 0.95rem;
+            }
+
+            .Product .box .btn {
+                width: 100%;
+                /* ✅ Full width button */
+                padding: 12px;
+            }
+        }
+
+        /* ✅ Extra Small Screens */
+        @media (max-width: 480px) {
+            .Product .heading {
+                font-size: 1.6rem;
+            }
+
+            .Product .box img {
+                width: 110%;
+                max-width: 100%;
+                height: 160px;
+            }
+
+            .Product .box h3 {
+                font-size: 1rem;
+            }
+
+            .Product .box .btn {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <a href="{{ url_for('project') }}" class="logo"><i class="fas fa-shopping-basket"></i> AgriConnect</a>
+
+        <div class="icons">
+            <a href="{{ url_for('cart') }}" title="Cart">
+                <div class="fas fa-shopping-cart"></div>
+            </a>
+            <a href="{{ url_for('project') }}" title="Home">
+                <div class="fas fa-home"></div>
+            </a>
+        </div>
+
+        <!-- Search Form -->
+        <form action="{{ url_for('search') }}" method="GET" class="search-form" id="search-form">
+            <input type="search" id="search-box" name="query" placeholder="Search products..." required>
+            <label for="search-box" class="fas fa-search"></label>
+        </form>
+    </header>
+
+    <!-- Products Section -->
+    <section class="Product" id="product">
+        <h1 class="heading"> Our <span> Products </span></h1>
+
+        {% if search_query %}
+        <h2 style="text-align:center; color:green; margin-bottom: 20px;">
+            Search Results for "{{ search_query }}"
+        </h2>
+        {% endif %}
+
+        {% if products %}
+        <div class="box-container">
+            {% for product in products %}
+            <div class="box">
+                {% if product.image %}
+                <img src="{{ url_for('static', filename='uploads/' ~ product.image) }}" alt="{{ product.name }}">
+                {% else %}
+                <img src="{{ url_for('static', filename='images/default.jpg') }}" alt="default">
+                {% endif %}
+
+                <h3>{{ product.name }}</h3>
+                <span class="price">per kg ₹{{ product.price }}</span>
+                <span class="quantity">Total Qty: {{ product.qty }} kg</span>
+                <p class="farmer-info">By: {{ product.farmer_name }} ({{ product.shop_name }})</p>
+
+                <div class="stars" data-product-id="{{ product.id }}">
+                    {% set avg_rating = product.avg_rating if product.avg_rating != None else 0 %}
+                    {% for i in range(1, 6) %}
+                    {% if i <= (avg_rating|round(0, 'common' )) %} <i class="fas fa-star" data-rating="{{ i }}"></i>
+                        {% elif i - 0.5 <= avg_rating %} <i class="fas fa-star-half-alt" data-rating="{{ i }}"></i>
+                            {% else %}
+                            <i class="far fa-star" data-rating="{{ i }}"></i>
+                            {% endif %}
+                            {% endfor %}
+                </div>
+
+                <!-- Optional: Show average rating and total ratings -->
+                <div class="rating-info">
+                    <small style="color:#666;">
+                        {{ "%.1f"|format(avg_rating) }} ({{ product.total_ratings }} ratings)
+                    </small>
+                </div>
+
+                <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="POST">
+                    <button type="submit" class="btn">Add to cart</button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p style="text-align:center; color:red; font-size:1.2rem; margin-top:20px;">
+            No products found matching your search.
+        </p>
+        {% endif %}
+    </section>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const starContainers = document.querySelectorAll('.Product .box .stars');
+
+            starContainers.forEach(container => {
+                const stars = container.querySelectorAll('i');
+                const productId = container.dataset.productId;
+
+                stars.forEach((star, index) => {
+                    star.addEventListener('click', function () {
+                        // Reset all stars in this container
+                        stars.forEach(s => s.classList.remove('fas', 'active'));
+                        stars.forEach(s => s.classList.add('far'));
+
+                        // Fill stars up to clicked one
+                        for (let i = 0; i <= index; i++) {
+                            stars[i].classList.remove('far');
+                            stars[i].classList.add('fas', 'active');
+                        }
+
+                        // Send rating to backend
+                        const rating = index + 1;
+                        console.log(`Product ID: ${productId}, Rating: ${rating}`);
+
+                        fetch('/rate-product', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                product_id: productId,
+                                rating: rating
+                            })
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    console.log('Rating saved successfully!');
+                                    // Reload the page to show updated average rating
+                                    setTimeout(() => {
+                                        location.reload();
+                                    }, 500); // Small delay to let user see the change
+                                } else {
+                                    console.error('Error saving rating:', data.message);
+                                    alert('Error: ' + data.message);
+                                }
+                            })
+                            .catch(err => {
+                                console.error('Network error:', err);
+                                alert('Network error occurred');
+                            });
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

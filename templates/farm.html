@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        input[type="email"] {
+            text-transform: none !important;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        textarea {
+            text-transform: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Farmer Registration Section -->
+    <section class="farmer-register" id="farmer-register">
+        <h1 class="heading"> Farmer <span>Registration</span> </h1>
+
+        <div class="form-container">
+            <form id="register-form" class="register-form" method="POST" action="{{ url_for('farmer_register') }}">
+                <h3>Step 1: Register Your Shop</h3>
+
+                <label>Farmer Name</label>
+                <input type="text" name="farmer_name" required>
+
+                <label>Shop Name</label>
+                <input type="text" name="shop_name" required>
+
+                <label>Contact Number</label>
+                <input type="tel" name="contact" required>
+
+                <label>Email</label>
+                <input type="email" name="email" required>
+
+                <label>Password</label>
+                <input type="password" name="password" required>
+
+
+                <label>Shop Address</label>
+                <textarea name="address" rows="3" required></textarea>
+
+                <button type="submit" class="btn">Register Shop</button>
+                <p>Already have an account? <a href="{{ url_for('farmer_login') }}" class="btn">Login</a></p>
+            </form>
+        </div>
+    </section>
+
+
+
+
+
+</body>
+
+</html>

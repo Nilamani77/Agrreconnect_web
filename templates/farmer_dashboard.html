@@ -1,0 +1,345 @@
+<!-- templates/farmer_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Farmer Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            color: black;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #16a085;
+            padding: 12px 20px;
+            border-radius: 10px;
+        }
+
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+        }
+
+        .icon-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            color: black;
+            background-color: #16a085;
+            border-radius: 70%;
+            font-size: 18px;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: #27ae60;
+            transform: scale(1.1);
+        }
+
+        .logout {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .logout:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+
+
+
+        /* Sales Card */
+        .sales-card {
+            margin: 25px 0;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2980b9;
+            text-align: center;
+        }
+
+        /* Form */
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px 25px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            max-width: 450px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 15px;
+            color: #16a085;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container input[type="file"],
+        .form-container select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        .form-container button {
+            background-color: #16a085;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .form-container button:hover {
+            background-color: #13876b;
+        }
+
+        /* Product Table */
+        .table-container {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .table-container h2 {
+            margin-bottom: 15px;
+            color: #16a085;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        table th,
+        table td {
+            padding: 12px 15px;
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        table th {
+            background-color: #16a085;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        table img {
+            border-radius: 6px;
+            max-width: 80px;
+        }
+
+        .delete-btn {
+            color: #e74c3c;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .delete-btn:hover {
+            text-decoration: underline;
+        }
+
+        .update-form {
+            margin-top: 6px;
+        }
+
+        .update-form input {
+            width: 80px;
+            padding: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .update-form button {
+            padding: 4px 8px;
+            background: #16a085;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .update-form button:hover {
+            background: #13876b;
+        }
+
+        .form-container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 1.2rem;
+            }
+
+            .logout {
+                width: 100%;
+                text-align: center;
+                font-size: 1rem;
+            }
+
+            .sales-card {
+                font-size: 0.95rem;
+                padding: 12px;
+            }
+
+            .form-container h2,
+            .table-container h2 {
+                font-size: 1rem;
+                text-align: center;
+            }
+
+            table {
+                font-size: 0.85rem;
+                min-width: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Welcome, {{ session.farmer_name }}</h1>
+
+        <div class="header-actions">
+            <a href="{{ url_for('project') }}" class="icon-btn" title="Home">
+                <i class="fa-solid fa-house" id="home-btn"></i>
+            </a>
+            <a href="{{ url_for('farmer_logout') }}" class="logout">Logout</a>
+        </div>
+    </div>
+
+
+
+
+    <!-- Total Sales -->
+    <div class="sales-card">
+        💰 Total Sales: ₹{{ sales }}
+    </div>
+
+    <!-- Add Product Form -->
+    <div class="form-container">
+        <h2>Add New Product</h2>
+        <form action="/farmer/add_product" method="POST" enctype="multipart/form-data">
+            <input type="text" name="name" placeholder="Product Name" required />
+            <input type="number" step="0.01" name="price" placeholder="Price" required />
+            <input type="text" name="qty" placeholder="Quantity" required />
+            <select name="category" required>
+                <option value="">select category</option>
+                <option value="vegetable">vegetable</option>
+                <option value="fruit">fruit</option>
+                <option value="dairy">dairy</option>
+            </select>
+            <input type="file" name="image" />
+            <button type="submit">Add Product</button>
+        </form>
+    </div>
+
+    <!-- Add this section BELOW your Product List in farmer_dashboard.html -->
+
+    <!-- Post News -->
+    <div class="form-container" style="margin-top:30px;">
+        <h2>Post News</h2>
+        <form action="/farmer/add_news" method="POST" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="News Title" required />
+            <textarea name="content" placeholder="Write your news here..." rows="5" required></textarea>
+            <input type="file" name="image" />
+            <button type="submit">Post News</button>
+        </form>
+    </div>
+
+
+    <!-- Product List -->
+    <div class="table-container">
+        <h2>Your Products</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Qty</th>
+                <th>Per 1 Kg</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Action</th>
+            </tr>
+            {% for p in products %}
+            <tr>
+                <td>{{ p.name }}</td>
+                <td>{{ p.qty }} kg</td>
+                <td>1{{ p.perkg }} kg</td>
+                <td>
+                    ₹{{ p.price }}
+                    <!-- Update Price Form -->
+                    <form action="{{ url_for('update_price', id=p.id) }}" method="POST" class="update-form">
+                        <input type="number" name="price" step="0.01" placeholder="New Price" required />
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+                <td>
+                    {% if p.image %}
+                    <img src="{{ url_for('static', filename='uploads/' ~ p.image) }}" alt="{{ p.name }}">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='images/default.jpg') }}" alt="No image">
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('delete_product', id=p.id) }}" class="delete-btn">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+
+</html>

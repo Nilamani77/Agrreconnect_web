@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f1f1;
+            margin: 0;
+            padding: 0;
+        }
+
+        .checkout-container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 25px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, .1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding-top: 15px;
+        }
+
+        /* Address Section */
+        #addressSection {
+            display: none;
+            margin-top: 20px;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #27ae60;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .btn:hover {
+            background: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="checkout-container">
+        <h1>Checkout</h1>
+
+        {% for item in cart %}
+        <div class="item">
+            <div>
+                {{ item.name }} (x{{ item.quantity }})
+            </div>
+            <div>₹{{ item.price * item.quantity }}</div>
+        </div>
+        {% endfor %}
+
+        <div class="total">
+            Total: ₹{{ total }}
+        </div>
+
+        <button class="btn" id="continueBtn">Continue</button>
+
+        <!-- Address Section -->
+        <div id="addressSection">
+            <h2>Shipping Address</h2>
+
+            <form method="POST" action="{{ url_for('place_order') }}">
+                <input type="text" name="fullname" placeholder="Full Name" required>
+
+                <input type="text" name="phone" placeholder="Phone Number" required>
+
+                <textarea name="address" rows="3" placeholder="Full Address" required></textarea>
+
+                <input type="text" name="city" placeholder="City" required>
+                <input type="text" name="state" placeholder="State" required>
+                <input type="text" name="pincode" placeholder="Pincode" required>
+
+                <input type="hidden" name="total" value="{{ total }}">
+
+                <button type="submit" class="btn">Place Your Order</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("continueBtn").addEventListener("click", () => {
+            document.getElementById("addressSection").style.display = "block";
+            document.getElementById("continueBtn").style.display = "none";
+        });
+    </script>
+</body>
+
+</html>
