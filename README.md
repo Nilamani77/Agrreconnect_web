@@ -28,7 +28,8 @@ This project is built using Flask (Python) for backend and HTML/CSS/JavaScript f
     * `smtplib` (Email Services)
 
 
-📂 Project Structure
+### 📂 Project Structure
+```bash
 Agreconnect_web/
 │
 ├── project.py
@@ -37,7 +38,7 @@ Agreconnect_web/
 ├── .env (ignored)
 ├── .gitignore
 └── README.md
-
+```
 
 ### ⚙️ Installation Guide
 ### 1️⃣ Clone the Repository
