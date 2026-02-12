@@ -2,7 +2,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![Flask](https://img.shields.io/badge/Flask-Framework-black)
 
-#🌾AgriConnect – Farmer Support & Market Linkage Portal
+### 🌾AgriConnect – Farmer Support & Market Linkage Portal
 
 **AgriConnect** is a web-based platform designed to connect farmers directly with buyers, provide market price updates, and offer agricultural support services. The system helps eliminate middlemen and improve farmer income.
 
@@ -39,7 +39,7 @@ Agreconnect_web/
 └── README.md
 
 
-##⚙️ Installation Guide
+### ⚙️ Installation Guide
 ### 1️⃣ Clone the Repository
 ```bash
 git clone https://github.com/Nilamani77/Agrreconnect_web.git
