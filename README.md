@@ -48,8 +48,8 @@ cd Agrreconnect_web
 ```
 
 ### 2️⃣ Create Virtual Environment
-*python -m venv venv
-*venv\Scripts\activate   # Windows
+* **python -m venv venv**
+* **venv\Scripts\activate**   
 
 ### 3️⃣ Install Dependencies
 ```bash
@@ -57,7 +57,7 @@ pip install -r requirements.txt
 ```
 
 ### 4️⃣ Create .env File
-*Create a .env file in the root folder:
+* **Create a .env file in the root folder:**
 ```bash
 GOOGLE_CLIENT_ID=your_client_id
 GOOGLE_CLIENT_SECRET=your_client_secret
@@ -73,18 +73,18 @@ http://127.0.0.1:5000
 ```
 
 ### 🔐 Security
-*OAuth credentials stored using environment variables
+* **OAuth credentials stored using environment variables**
 ```bash
 .env file excluded using .gitignore
 No hardcoded secrets
 ```
 
 ### 🎯 Future Enhancements
-*Payment Gateway Integration
-*Admin Dashboard
-*AI-based Crop Recommendation
-*Real-time Market Price API
-*Deployment on Cloud (AWS/Render)
+* **Payment Gateway Integration**
+* **Admin Dashboard**
+* **AI-based Crop Recommendation**
+* **Real-time Market Price API**
+* **Deployment on Cloud (AWS/Render)**
 
 ### 👤 Author
 * **Nilamani Kundu**
