@@ -9,14 +9,14 @@
 This project is built using Flask (Python) for backend and HTML/CSS/JavaScript for frontend.
 
 ##🚀 Features
-*👨‍🌾 Farmer Registration & Login
-*🔐 Google OAuth Login Integration
-*📦 Product Listing by Farmers
-*🛒 Buyer Product Browsing
-*📊 Market Price Information
-*📁 Secure Authentication System
-*🗂 Database Integration (SQLite/MySQL)
-*🔒 Environment-based secret protection
+* **👨‍🌾** Farmer Registration & Login
+* **🔐** Google OAuth Login Integration
+* **📦** Product Listing by Farmers
+* **🛒** Buyer Product Browsing
+* **📊** Market Price Information
+* **📁** Secure Authentication System
+* **🗂** Database Integration (SQLite/MySQL)
+* **🔒** Environment-based secret protection
 
 ## 🛠️ Tech Stack
 
@@ -86,8 +86,8 @@ No hardcoded secrets
 *Deployment on Cloud (AWS/Render)
 
 ### 👤 Author
-*Nilamani Kundu
-*B.Tech CSE (AI & ML)
+* **Nilamani Kundu**
+* **B.Tech CSE (AI & ML)**
 * **GitHub**: https://github.com/Nilamani77
 
 ## 📸 Screenshots
