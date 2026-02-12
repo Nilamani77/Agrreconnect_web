@@ -8,7 +8,7 @@
 
 This project is built using Flask (Python) for backend and HTML/CSS/JavaScript for frontend.
 
-##🚀 Features
+### 🚀Features
 * **👨‍🌾** Farmer Registration & Login
 * **🔐** Google OAuth Login Integration
 * **📦** Product Listing by Farmers
